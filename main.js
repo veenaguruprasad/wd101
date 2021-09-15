@@ -1,15 +1,12 @@
-// Getting Canvas
 var c = document.getElementById("mycanvas");
 var ctx = c.getContext("2d");
 
-// Function for load Image
 let loadImage = (src, callback) => {
     let img = document.createElement("img");
     img.onload = () => callback(img);
     img.src = src;
 };
 
-//Gets Image Path
 let imagePath = (frameNumber,aniamtion) => {
     return "images/" + aniamtion + "/"+ frameNumber + ".png";
 };
@@ -24,34 +21,24 @@ let frames = {
 };
 
 let loadImages = (callback) => {
-
     let images = {idle:[],kick:[],punch:[],forward:[],backward:[],block:[]};
     let imagesToLoad = 0;
     ["idle","kick","punch","forward","backward","block"].forEach(animation => {
         let animationFrames = frames[animation];
-
         imagesToLoad = imagesToLoad + animationFrames.length;
-
         animationFrames.forEach((frameNumber) => {
-
             let path = imagePath(frameNumber, animation);
-
             loadImage(path, (image) => {
                 images[animation][frameNumber - 1] = image;
                 imagesToLoad = imagesToLoad - 1;
-    
                 if(imagesToLoad == 0)
-                {
                     callback(images);
-                }
-    
             });
         });
-        })
+    })
 };
 
 let x = 10;
-
 let animate = (ctx, images, animation, callback) => {
     images[animation].forEach((image,index) => {
         setTimeout(() => {
@@ -79,7 +66,6 @@ loadImages((images) => {
     };
 
     aux();
-
     document.getElementById("kick").onclick = () => {
         q.push("kick");
     };
